@@ -39,7 +39,7 @@ if __name__ == "__main__":
         vRighe = fjava.readlines()
         fjava.close()
 
-        vRighe.append("package " + "demartini_F_" + projectName + ".bin;\n\n")
+        vRighe.append("package " + "nicolis_A_" + projectName + ".bin;\n\n")
         vRighe = rotate(vRighe, -1)
 
         fjava = open(f, "w")

@@ -17,7 +17,7 @@ if __name__ == '__main__':
     projectListDir = os.listdir()
 
     for directory in projectListDir:
-        if isdir(directory) and directory.startswith("demartini"):
+        if isdir(directory) and directory.startswith("nicolis"):
             package = "package " + directory + ".bin;\n"
             directory += "/bin/"
             if isdir(directory):

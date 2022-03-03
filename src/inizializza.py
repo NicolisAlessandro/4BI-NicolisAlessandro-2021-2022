@@ -15,7 +15,7 @@ percorso, tail = os.path.split(__file__)
 os.chdir(percorso)
 
 # CONSTANTI
-nomeCartella = "demartini_F_"
+nomeCartella = "nicolis_A_"
 
 
 def import_parents(level):
