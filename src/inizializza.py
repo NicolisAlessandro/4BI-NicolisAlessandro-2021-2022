@@ -15,7 +15,12 @@ percorso, tail = os.path.split(__file__)
 os.chdir(percorso)
 
 # CONSTANTI
+pathSeparation = "//"
 nomeCartella = "nicolis_A_"
+readmeName = "README.md"
+binName = "bin"
+docName = "doc"
+fileName = "file"
 
 
 def import_parents(level):
@@ -26,7 +31,7 @@ def import_parents(level):
     sys.path.append(str(top))
     try:
         sys.path.remove(str(parent))
-    except ValueError:  # already removed
+    except ValueError:  # giá rimosso
         pass
 
     __package__ = '.'.join(parent.parts[len(top.parts):])
@@ -34,7 +39,7 @@ def import_parents(level):
 
 
 def cartelle(nomeProgetto):
-    cartella = percorso + "//" + nomeCartella + nomeProgetto
+    cartella = percorso + pathSeparation + nomeCartella + nomeProgetto
     esiste = os.path.isdir(cartella)
     perBin = ""
     perDoc = ""
@@ -43,13 +48,13 @@ def cartelle(nomeProgetto):
     if not esiste:
         os.makedirs(cartella)
 
-        perBin = cartella + "//" + "bin"
+        perBin = cartella + pathSeparation + binName
         os.makedirs(perBin)
 
-        perDoc = cartella + "//" + "doc"
+        perDoc = cartella + pathSeparation + docName
         os.makedirs(perDoc)
 
-        perFile = cartella + "//" + "file"
+        perFile = cartella + pathSeparation + fileName
         os.makedirs(perFile)
 
     else:
@@ -59,11 +64,12 @@ def cartelle(nomeProgetto):
 
 def creaFile(perBin, perDoc, intJava, intRead):
     try:
-        filejava = open(perBin + "//" + projectClassName + ".java", "w")
+        filejava = open(perBin + pathSeparation +
+                        projectName + ".java", "w")
         filejava.write(intJava)
         filejava.close()
 
-        filejava = open(perDoc + "//README.md", "w")
+        filejava = open(perDoc + pathSeparation + readmeName, "w")
         filejava.write(intRead)
         filejava.close()
     except IOError:
@@ -80,7 +86,7 @@ if __name__ == '__main__' and __package__ is None:
         print("Start")
 
     # INPUT
-    projectName = input("inserire nome progetto: ")
+    projectName = input("inserire nome progetto: ").capitalize()
     consegna = ""
     counterCapolinea = 1
 
@@ -95,24 +101,20 @@ if __name__ == '__main__' and __package__ is None:
         else:
             counterCapolinea = 1
 
-    # VARIABILI
-
-    projectClassName = projectName[0].upper() + projectName[1:]
-
     # Java
     headerJava = \
-        'package ' + nomeCartella + projectName + '.bin;\n' + \
+        'package ' + nomeCartella + projectName + '.' + binName + ';\n' + \
         '\n' + \
         'import java.io.File;\n' + \
         '\n' + \
-        'class ' + projectClassName + ' {\n' + \
+        'class ' + projectName + ' {\n' + \
         '\n' + \
-        '\tpublic ' + projectClassName + '() {\n' + \
+        '\tpublic ' + projectName + '() {\n' + \
         '\n' + \
         '\t}\n' + \
         '}\n' + \
         '\n' + \
-        'class ' + projectClassName + 'Test {\n' + \
+        'class ' + projectName + 'Test {\n' + \
         '\tpublic static void main(String[] args) {\n' + \
         '\n' + \
         '\t\tSystem.out.println("Start");\n' + \
@@ -120,7 +122,7 @@ if __name__ == '__main__' and __package__ is None:
         '\t\t//\t\tCALCOLO PATH RELATIVO UNIVERSALE\n' + \
         '\t\t//----------------------------------------------------------------------\n' + \
         '\t\tString tempPath = new File(\n' + \
-        '\t\t\t\tString.valueOf(' + projectClassName + '.class.getPackage()).replace("package ", "").replace(".", "/")\n' + \
+        '\t\t\t\tString.valueOf(' + projectName + '.class.getPackage()).replace("package ", "").replace(".", "/")\n' + \
         '\t\t).getParent();\n' + \
         '\t\tFile uesrPath = new File(System.getProperty("user.dir"));\n' + \
         '\t\tString projectPath = uesrPath.getName().equals(tempPath) ?\n' + \
@@ -131,7 +133,7 @@ if __name__ == '__main__' and __package__ is None:
         '\t\t//----------------------------------------------------------------------\n' + \
         '\n' + \
         '\t\t// COSTANTI\n' + \
-        '\t\tString resursesPath = "/file/";\n' + \
+        '\t\tString resursesPath = "/' + fileName + '/";\n' + \
         '\n' + \
         '\t\tSystem.out.println("Hello, World");\n' + \
         '\n' + \
@@ -142,7 +144,7 @@ if __name__ == '__main__' and __package__ is None:
 
     # Readme
     headerMd = \
-        "# Program name: " + projectClassName + ".java\n" + \
+        "# Program name: " + projectName + ".java\n" + \
         "\n" + \
         "---\n" + \
         "\n" + \

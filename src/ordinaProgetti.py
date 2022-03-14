@@ -23,30 +23,38 @@ if __name__ == "__main__":
 
     vettFile = glob.glob('*.java')
     for f in vettFile:
-        headerMd = "# Program name: " + f + "\n" + \
+
+        projectName = (f.rsplit(".", 1))[0].capitalize()
+        newFileName = shutil.move(f, projectName + ".java")
+
+        headerMd = "# Program name: " + newFileName + "\n" + \
                    "---\n" + \
                    "\n" + \
                    "## Consegna\n _________________"
 
-        projectName = (f.split("."))[0]
-        exist, perBin, perDoc = cartelle(projectName)
+        exist, perBin, perDoc, perFile, cartella = cartelle(projectName)
 
-        filejava = open(perDoc + "//README.md", "w")
+        if (not exist == False):
+            print(exist)
+            break
+
+        filejava = open(perDoc + pathSeparation + readmeName, "w")
         filejava.write(headerMd)
         filejava.close()
 
-        fjava = open(f, "r")
+        fjava = open(newFileName, "r")
         vRighe = fjava.readlines()
         fjava.close()
 
-        vRighe.append("package " + "nicolis_A_" + projectName + ".bin;\n\n")
+        vRighe.append("package " + nomeCartella +
+                      projectName + "." + binName + ";\n\n")
         vRighe = rotate(vRighe, -1)
 
-        fjava = open(f, "w")
+        fjava = open(newFileName, "w")
         fjava.writelines(vRighe)
         fjava.close()
 
-        shutil.move(percorso + "\\" + f, perBin)
+        shutil.move(percorso + "\\" + newFileName, perBin)
 
     if boold:
         print("End")
