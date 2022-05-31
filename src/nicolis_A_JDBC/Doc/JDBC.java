@@ -1,15 +1,22 @@
-import java.squil.*;
+import java.sql.*;
 import java.until.*;
 
 
 public JDBC{
 
         public JDBC{
+        CREATE DATABASE IF NOT EXISTS dbfrasi;
 
+        use dbfrasi;
+
+        drop user if exists 'utfrasi'@'%';
+        drop user if exists 'utfrasi'@'localhost';
+        DROP TABLE IF EXISTS frase;
+        DROP TABLE IF EXISTS autore ;
+
+        GRANT ALL PRIVILEGES ON dbfrasi.* TO 'utfrasi'@'%';
+        GRANT ALL PRIVILEGES ON dbfrasi.* TO 'utfrasi'@'localhost';
         }
-
-        conn=DriverManager.getConnection(
-        "jdbc:sqlite:magaz.db");
 
 public static int insertProdotti(Connection c,String nome,String matricola,String cognome,String classe,String annoSc)throws SQLException{
         int r;
@@ -23,9 +30,20 @@ public static int insertProdotti(Connection c,String nome,String matricola,Strin
         }
 
 
-public static int creaTab(Connection c)throws SQLException{
-        Statement stmt=null;
-        stmt=c.createStatement();
+public static int creaTabAutore(Connection c)throws SQLException{
+        Statement stmt=c.createStatement();
+        String create="CREATE TABLE studenti ("
+        +"  nome varchar(10) primary key,"
+        +"  cognome varchar(30) DEFAULT NULL,"
+        +"  matricola int not null auto_increment,"
+        +") ";
+        System.out.println(create);
+        int r=stmt.executeUpdate(create);
+        return r;
+        }
+
+public static int creaTabFrase(Connection c)throws SQLException{
+        Statement stmt=c.createStatement();
         String create="CREATE TABLE studenti ("
         +"  nome varchar(10) primary key,"
         +"  cognome varchar(30) DEFAULT NULL,"
@@ -37,11 +55,9 @@ public static int creaTab(Connection c)throws SQLException{
         }
 
 
-public static void visProdotti(Connection c)throws SQLException{
-        Statement stmt=null;
-        ResultSet rs=null;
-        stmt=c.createStatement();
-        rs=stmt.executeQuery("SELECT * FROM prodotti");
+public static void visAutori(Connection c)throws SQLException{
+        Statement stmt=c.createStatement();
+        ResultSet rs=stmt.executeQuery("SELECT * FROM autori");
 
         while(rs.next()){
         System.out.println(rs.getString("nome")
@@ -52,12 +68,13 @@ public static void visProdotti(Connection c)throws SQLException{
         }
 
 }
+public class JDBCTest {
+        public static void main(String[] args) throws SQLEexception{
+                conn=DriverManager.getConnection("jdbc:sqlite:magaz.db", );
 
-public static void main(String[]args){
-        JDBC data = new JBCD;
 
         }
-
+}
 //# mysql -h Decal.marconivr.it  -u utfrasi -p  connetersi a un daatbase
 // MySQL [(nome)] use dbfrasi
 //query ok, 4 rows affected    query dice se è riuscito a caricare i dati e quante righe sono state modificate
