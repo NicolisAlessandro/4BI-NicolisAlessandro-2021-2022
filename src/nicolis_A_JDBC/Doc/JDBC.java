@@ -66,20 +66,11 @@ public static void visAutori(Connection c)throws SQLException{
         }
         stmt.close();
         }
-
 }
+
+
 public class JDBCTest {
         public static void main(String[] args) throws SQLEexception{
                 conn=DriverManager.getConnection("jdbc:sqlite:magaz.db", );
-
-
         }
 }
-//# mysql -h Decal.marconivr.it  -u utfrasi -p  connetersi a un daatbase
-// MySQL [(nome)] use dbfrasi
-//query ok, 4 rows affected    query dice se è riuscito a caricare i dati e quante righe sono state modificate
-// select from frase join autore on (frase.idautore = autore.id); mette in collegamento le 2 tabelle
-// order by nomeVariabile  mette in ordinare a seconda della variabile data (desc dal più grande al più piccolo, )
-//show create table nomeTable mostra come viene creato
-//show tables mostra tutte le tabelle
-//utfrasi pass psfrasi
