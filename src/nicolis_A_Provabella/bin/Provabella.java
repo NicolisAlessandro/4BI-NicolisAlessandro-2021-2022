@@ -1,6 +1,7 @@
 package nicolis_A_Provabella.bin;
 
 import java.io.File;
+import java.util.ArrayList;
 
 class Provabella {
 
@@ -31,6 +32,12 @@ class ProvabellaTest {
 		String resursesPath = "/file/";
 
 		System.out.println("Hello, World");
+
+		ArrayList
+
+
+
+
 
 		System.out.println("End");
 
