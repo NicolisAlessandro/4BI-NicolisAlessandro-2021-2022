@@ -1,18 +1,14 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Image;
-
-import main.game.maze.interactable.Interactable;
-import main.game.maze.interactable.Option;
-import main.game.maze.interactable.Position;
-import main.game.maze.interactable.creature.player.Player;
-import main.game.util.Size;
+import java.awt.*;
 
 public final class DummyObject implements Interactable {
-    private static DummyObject dummyObject = new DummyObject();
-    private DummyObject(){}
+    private static final DummyObject dummyObject = new DummyObject();
 
-    public static DummyObject getInstance(){
+    private DummyObject() {
+    }
+
+    public static DummyObject getInstance() {
         return dummyObject;
     }
 
@@ -32,7 +28,7 @@ public final class DummyObject implements Interactable {
     }
 
     @Override
-    public Size getImageSize(){
+    public Size getImageSize() {
         return null;
     }
 

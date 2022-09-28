@@ -1,24 +1,27 @@
 package nicolis_A_Provabella.file;
+
 import java.awt.*;
 
-public abstract class Item implements Interactable{
+public abstract class Item implements Interactable {
     private Image image;
-    private String name;
+    private final String name;
     private Position position;
-    private Size imageSize;
-    private String description;
+    private final Size imageSize;
+    private final String description;
 
     public Item(String name, String imageSrc, Size imagesize, String description) {
         this.name = name;
         this.imageSize = imagesize;
         this.description = description;
-        if (imageSrc != null){
+        if (imageSrc != null) {
             this.image = Util.readImage(imageSrc);
         }
     }
 
     public abstract void resetPosition();
+
     protected abstract void pickUp(Player player);
+
     public abstract String getShortDescription();
 
     @Override
@@ -26,8 +29,8 @@ public abstract class Item implements Interactable{
         return position;
     }
 
-    public void setPosition(Position position){
-        if (position == null){
+    public void setPosition(Position position) {
+        if (position == null) {
             this.position = null;
         } else {
             this.position = new Position(position);
@@ -49,13 +52,13 @@ public abstract class Item implements Interactable{
         return imageSize;
     }
 
-    public void dropAt(Position position){
+    public void dropAt(Position position) {
         setPosition(position);
         position.getRoom().addDroppedItem(this);
     }
 
-    public boolean tryPickUp(Player player){
-        if (player.isCloseToInteractable(this)){
+    public boolean tryPickUp(Player player) {
+        if (player.isCloseToInteractable(this)) {
             pickUp(player);
             return true;
         }

@@ -21,21 +21,19 @@ public class password {
                         carSpeciale = true;
                     }
             }
-            if (carMaiuscolo && carMinuscolo && carSpeciale && carNumero) {
-                return true;
-            }
+            return carMaiuscolo && carMinuscolo && carSpeciale && carNumero;
         }
         return false;
     }
 
     public static void main(String[] args) {
-        
+
         Scanner riga = new Scanner(System.in);
         String pass;
         do {
             System.out.println("inserire la Password");
             pass = riga.nextLine();
-        } while (validity(pass) == false);
+        } while (!validity(pass));
         System.out.println("Password coprretta");
     }
 }

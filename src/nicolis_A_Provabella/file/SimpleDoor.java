@@ -1,11 +1,9 @@
 package nicolis_A_Provabella.file;
 
-import main.game.maze.interactable.creature.player.Player;
-import main.game.maze.room.Room;
+public class SimpleDoor implements Door {
+    private final Room destinationRoom;
 
-public class SimpleDoor implements Door{
-    private Room destinationRoom;
-    public SimpleDoor(Room destinationRoom){
+    public SimpleDoor(Room destinationRoom) {
         this.destinationRoom = destinationRoom;
     }
 

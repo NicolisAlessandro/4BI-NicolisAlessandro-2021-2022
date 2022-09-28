@@ -8,21 +8,22 @@ import java.awt.*;
 import java.util.List;
 
 public class PlayerController {
-    private Player player;
-    public PlayerController(Player player){
+    private final Player player;
+
+    public PlayerController(Player player) {
         this.player = player;
     }
 
-    void pickUpItems(){
+    void pickUpItems() {
         pickUpKeys();
         pickUpGroupGateStone();
         pickUpDroppedItems();
     }
 
     private void pickUpDroppedItems() {
-        if (player.getPosition().getRoom().hasDroppedItems()){
-            for (Item item: player.getPosition().getRoom().getDroppedItems()){
-                if (item.tryPickUp(player)){
+        if (player.getPosition().getRoom().hasDroppedItems()) {
+            for (Item item : player.getPosition().getRoom().getDroppedItems()) {
+                if (item.tryPickUp(player)) {
                     return;
                 }
             }
@@ -30,9 +31,9 @@ public class PlayerController {
     }
 
     private void pickUpGroupGateStone() {
-        if (player.getGroupGateStone().exists()){
-            if (player.getPosition().getRoom() == player.getGroupGateStone().getPosition().getRoom()){
-                if (player.isCloseToInteractable(player.getGroupGateStone())){
+        if (player.getGroupGateStone().exists()) {
+            if (player.getPosition().getRoom() == player.getGroupGateStone().getPosition().getRoom()) {
+                if (player.isCloseToInteractable(player.getGroupGateStone())) {
                     player.getGroupGateStone().resetPosition();
                 }
             }
@@ -41,13 +42,13 @@ public class PlayerController {
 
     void pickUpKeys() {
         Key key = player.getPosition().getRoom().getKey();
-        if (key != null){
+        if (key != null) {
             key.tryPickUp(player);
         }
     }
 
     void respawn() {
-        if (!player.getGroupGateStone().exists()){
+        if (!player.getGroupGateStone().exists()) {
             player.getGroupGateStone().dropGateStone();
         }
         player.getStats().resetHealth();
@@ -57,23 +58,22 @@ public class PlayerController {
     void teleportToBase() {
         MainController.addGameAction(new GameAction() {
             final long startTeleportTime = System.currentTimeMillis();
-            final Position startTeleportPosition= new Position(player.getPosition());
+            final Position startTeleportPosition = new Position(player.getPosition());
             final long startLastBeingAttackedTime = player.getLastBeingAttackedTime();
 
             @Override
             public void doAction() {
-                if (startTeleportTime < System.currentTimeMillis() - Config.DELAY_TELEPORT_TO_BASE){
+                if (startTeleportTime < System.currentTimeMillis() - Config.DELAY_TELEPORT_TO_BASE) {
                     player.setStartingPosition();
                     MainController.disposeAction(this);
                     return;
                 }
-                if (!startTeleportPosition.equals(player.getPosition())){
+                if (!startTeleportPosition.equals(player.getPosition())) {
                     MainController.disposeAction(this);
                     return;
                 }
-                if (startLastBeingAttackedTime != player.getLastBeingAttackedTime()){
+                if (startLastBeingAttackedTime != player.getLastBeingAttackedTime()) {
                     MainController.disposeAction(this);
-                    return;
                 }
 
             }
@@ -81,23 +81,23 @@ public class PlayerController {
     }
 
     synchronized boolean addItem(Item item) {
-        if (item instanceof NonStackable){
-            if (player.hasItemSpace()){
+        if (item instanceof NonStackable) {
+            if (player.hasItemSpace()) {
                 player.getItems().add(item);
                 return true;
             }
         } else if (item instanceof Stackable) {
-            if (!player.ownsItem(item)){
+            if (!player.ownsItem(item)) {
                 List<Item> playerItems = player.getItems();
-                for (Item playerItem: playerItems){
-                    if (playerItem.getClass().equals(item.getClass())){
+                for (Item playerItem : playerItems) {
+                    if (playerItem.getClass().equals(item.getClass())) {
                         Stackable newItem = (Stackable) item;
                         Stackable oldItem = (Stackable) playerItem;
                         oldItem.addQuantity(newItem.getQuantity());
                         return true;
                     }
                 }
-                if (player.hasItemSpace()){
+                if (player.hasItemSpace()) {
                     player.getItems().add(item);
                     return true;
                 }
@@ -109,8 +109,8 @@ public class PlayerController {
     }
 
     void drop(Item item) {
-        if (!player.hasEquipped(item)){
-            if (player.getItems().contains(item)){
+        if (!player.hasEquipped(item)) {
+            if (player.getItems().contains(item)) {
                 player.getItems().remove(item);
                 item.setPosition(player.getPosition());
                 player.getPosition().getRoom().addDroppedItem(item);
@@ -121,7 +121,7 @@ public class PlayerController {
     }
 
     void equip(Item item) {
-        if (item instanceof Weapon){
+        if (item instanceof Weapon) {
             System.out.println("PlayerController.equip(): " + item.getName());
             player.setWeapon((Weapon) item);
         } else {
@@ -130,8 +130,8 @@ public class PlayerController {
     }
 
     void unequip(Item item) {
-        if (item instanceof Weapon){
-            if (player.getWeapon() == item){
+        if (item instanceof Weapon) {
+            if (player.getWeapon() == item) {
                 System.out.println("PlayerController.unequip(): " + item.getName());
                 player.setWeapon(new NoWeapon());
             }
@@ -139,7 +139,7 @@ public class PlayerController {
     }
 
     void eat(Food food) {
-        if (player.ownsItem(food)){
+        if (player.ownsItem(food)) {
             player.getStats().heal(food.getHealAmount());
             player.getItems().remove(food);
         }
@@ -147,25 +147,25 @@ public class PlayerController {
 
     void interactWithDoor() {
         Direction dir;
-        if ((dir = getClosestDoorDirection()) != null){
+        if ((dir = getClosestDoorDirection()) != null) {
             move(dir);
         }
     }
 
-    private Direction getClosestDoorDirection(){
+    private Direction getClosestDoorDirection() {
         Point p = player.getPosition().getPoint();
-        Point d = new Point((Config.SIZE_ROOM_WIDTH - Config.SIZE_DOOR_ROOM - player.getImageSize().width)/2,
-                (Config.SIZE_ROOM_HEIGHT - Config.SIZE_DOOR_ROOM - player.getImageSize().height)/2);
-        Point k = new Point((Config.SIZE_ROOM_WIDTH - player.getImageSize().width)/2, (Config.SIZE_ROOM_HEIGHT - player.getImageSize().height)/2);
-        for (Direction dir: Direction.values()){
-            if (!player.getPosition().getRoom().hasDoorAtDirection(dir)){
+        Point d = new Point((Config.SIZE_ROOM_WIDTH - Config.SIZE_DOOR_ROOM - player.getImageSize().width) / 2,
+                (Config.SIZE_ROOM_HEIGHT - Config.SIZE_DOOR_ROOM - player.getImageSize().height) / 2);
+        Point k = new Point((Config.SIZE_ROOM_WIDTH - player.getImageSize().width) / 2, (Config.SIZE_ROOM_HEIGHT - player.getImageSize().height) / 2);
+        for (Direction dir : Direction.values()) {
+            if (!player.getPosition().getRoom().hasDoorAtDirection(dir)) {
                 continue;
             }
             Point l = dir.getCoordinates();
-            Point s = new Point(d.x*Math.abs(l.y) + (l.x+Math.abs(l.x))*k.x,d.y*Math.abs(l.x) + (l.y+Math.abs(l.y))*k.y);
-            Dimension f = new Dimension(Math.abs(l.y)*Config.SIZE_DOOR_ROOM, Math.abs(l.x)*Config.SIZE_DOOR_ROOM);
-            if (p.x >= s.x && p.x <= s.x+f.width){
-                if (p.y >= s.y && p.y <= s.y + f.height){
+            Point s = new Point(d.x * Math.abs(l.y) + (l.x + Math.abs(l.x)) * k.x, d.y * Math.abs(l.x) + (l.y + Math.abs(l.y)) * k.y);
+            Dimension f = new Dimension(Math.abs(l.y) * Config.SIZE_DOOR_ROOM, Math.abs(l.x) * Config.SIZE_DOOR_ROOM);
+            if (p.x >= s.x && p.x <= s.x + f.width) {
+                if (p.y >= s.y && p.y <= s.y + f.height) {
                     return dir;
                 }
             }
@@ -174,9 +174,8 @@ public class PlayerController {
     }
 
     void move(Direction direction) {
-        if (player.getPosition().getRoom().getDoorByDirection(direction) == null){
-            return;
-        } else if (player.getPosition().getRoom().getDoorByDirection(direction).isLocked()){
+        if (player.getPosition().getRoom().getDoorByDirection(direction) == null) {
+        } else if (player.getPosition().getRoom().getDoorByDirection(direction).isLocked()) {
             player.getPosition().getRoom().getDoorByDirection(direction).unlock(player);
         } else {
             player.getPosition().setRoom(player.getPosition().getRoom().getDoorByDirection(direction).getRoom());

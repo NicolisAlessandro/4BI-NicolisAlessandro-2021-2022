@@ -14,18 +14,19 @@ public class PariDispari {
         Scanner sc = new Scanner(System.in);
         int n, npa, ndis;
         int scelta = 1;
-        do{
+        do {
             n = sc.nextInt();
             System.out.println(n);
-            if(n % 2 ==0){
-            npa = n ;
-            System.out.println("numero è pari " + npa);
-        }else {
-            ndis = n ; 
-            System.out.println("numero è dispari " + ndis);}
+            if (n % 2 == 0) {
+                npa = n;
+                System.out.println("numero è pari " + npa);
+            } else {
+                ndis = n;
+                System.out.println("numero è dispari " + ndis);
+            }
             System.out.println("vuoi prosequire? Premere 1");
             scelta = sc.nextInt();
-        }while(scelta == 1);
-    }  
-    
+        } while (scelta == 1);
+    }
+
 }

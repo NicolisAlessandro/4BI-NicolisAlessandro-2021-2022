@@ -1,23 +1,14 @@
 package nicolis_A_Provabella.file;
 
 
-import main.game.maze.Maze;
-import main.game.maze.door.Door;
-import main.game.maze.door.KeyDoor;
-import main.game.maze.door.SimpleDoor;
-import main.game.maze.interactable.creature.monster.Monster;
-import main.game.maze.interactable.item.Item;
-import main.game.maze.interactable.item.Key;
-import main.game.maze.interactable.object.RoomObject;
-import main.game.util.Size;
-import main.game.util.Util;
-
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Room implements Comparable<Room>{
-    private static int ROOM_WIDTH = Config.SIZE_ROOM_WIDTH;
-    private static int ROOM_HEIGHT = Config.SIZE_ROOM_HEIGHT;
-    private static Size roomSize = new Size(ROOM_WIDTH, ROOM_HEIGHT);
+public abstract class Room implements Comparable<Room> {
+    private static final int ROOM_WIDTH = Config.SIZE_ROOM_WIDTH;
+    private static final int ROOM_HEIGHT = Config.SIZE_ROOM_HEIGHT;
+    private static final Size roomSize = new Size(ROOM_WIDTH, ROOM_HEIGHT);
     private Door north;
     private Door east;
     private Door south;
@@ -28,19 +19,19 @@ public abstract class Room implements Comparable<Room>{
     private Direction directionOfPreviousRoom;
     private Key key;
     private boolean isLocked = true;
-    private List<Monster> monsters = new ArrayList<Monster>();
-    private Maze maze;
-    private List<Item> droppedItems = new ArrayList<Item>();
-    private List<RoomObject> roomObjects = new ArrayList<RoomObject>();
+    private final List<Monster> monsters = new ArrayList<>();
+    private final Maze maze;
+    private final List<Item> droppedItems = new ArrayList<>();
+    private final List<RoomObject> roomObjects = new ArrayList<>();
     private boolean isCritical = false;
 
-    protected Room(Maze maze, Point point){
+    protected Room(Maze maze, Point point) {
         this.maze = maze;
         coordinates = new Point(point);
         isLocked = false;
     }
 
-    protected Room(Maze maze, Room previousRoom, Direction directionOfPreviousRoom){
+    protected Room(Maze maze, Room previousRoom, Direction directionOfPreviousRoom) {
         this.maze = maze;
         this.previousRoom = previousRoom;
         this.distanceFromStart = previousRoom.getDistance() + 1;
@@ -56,7 +47,7 @@ public abstract class Room implements Comparable<Room>{
     private void setCoordinates() {
         Point prevRoomCoord = previousRoom.getCoordinates();
         Point dirCoord = directionOfPreviousRoom.getOpposite().getCoordinates();
-        coordinates = new Point(prevRoomCoord.x+dirCoord.x,prevRoomCoord.y+dirCoord.y);
+        coordinates = new Point(prevRoomCoord.x + dirCoord.x, prevRoomCoord.y + dirCoord.y);
     }
 
 
@@ -65,53 +56,60 @@ public abstract class Room implements Comparable<Room>{
     }
 
     public void setDoor(Direction direction, Door door) {
-        switch (direction){
+        switch (direction) {
             case NORTH:
-                north = door; break;
+                north = door;
+                break;
             case EAST:
-                east =  door; break;
+                east = door;
+                break;
             case SOUTH:
-                south = door; break;
+                south = door;
+                break;
             case WEST:
-                west = door; break;
+                west = door;
+                break;
             default:
-                throw new IllegalArgumentException("unexpected direction" + direction.toString());
+                throw new IllegalArgumentException("unexpected direction" + direction);
         }
     }
 
-    public Door getDoorByDirection(Direction direction){
-        switch (direction){
-            case NORTH: return north;
-            case EAST: return east;
-            case SOUTH: return south;
-            case WEST: return west;
+    public Door getDoorByDirection(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return north;
+            case EAST:
+                return east;
+            case SOUTH:
+                return south;
+            case WEST:
+                return west;
             default:
-                throw new IllegalArgumentException("unexpected direction " + direction.toString());
+                throw new IllegalArgumentException("unexpected direction " + direction);
         }
     }
 
-    public boolean hasDoorAtDirection(Direction direction){
-        return getDoorByDirection(direction)!=null;
+    public boolean hasDoorAtDirection(Direction direction) {
+        return getDoorByDirection(direction) != null;
     }
 
     @Override
-    public boolean equals(Object o){
-        if (o == this){
+    public boolean equals(Object o) {
+        if (o == this) {
             return true;
         }
-        if (!(o instanceof Room)){
+        if (!(o instanceof Room room)) {
             return false;
         }
-        Room room = (Room) o;
         return getCoordinates().equals(room.getCoordinates()) && getDistance() == room.getDistance();
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         int result = 17;
-        result = 31*result + getCoordinates().x;
-        result = 31*result + getCoordinates().y;
-        result = 31*result + getDistance();
+        result = 31 * result + getCoordinates().x;
+        result = 31 * result + getCoordinates().y;
+        result = 31 * result + getDistance();
         return result;
     }
 
@@ -123,7 +121,7 @@ public abstract class Room implements Comparable<Room>{
         this.key = key;
     }
 
-    public void removeKey(){
+    public void removeKey() {
         key = null;
     }
 
@@ -136,24 +134,21 @@ public abstract class Room implements Comparable<Room>{
     }
 
     public boolean isLockedWithKey() {
-        if (!isLocked()){
+        if (!isLocked()) {
             return false;
         }
-        if (!(previousRoom.getDoorByDirection(directionOfPreviousRoom.getOpposite()) instanceof KeyDoor)){
-            return false;
-        }
-        return true;
+        return previousRoom.getDoorByDirection(directionOfPreviousRoom.getOpposite()) instanceof KeyDoor;
     }
 
-    public boolean isPreviousRoomLocked(){
-        if (getDistance() == 0){
+    public boolean isPreviousRoomLocked() {
+        if (getDistance() == 0) {
             return true;
         }
         return getDoorByDirection(getDirectionOfPreviousRoom()).getRoom().isLocked();
     }
 
-    public Room getPreviousRoom(){
-        if (getDistance() == 0){
+    public Room getPreviousRoom() {
+        if (getDistance() == 0) {
             throw new IllegalStateException("cannot call this function on starting room");
         }
         return getDoorByDirection(getDirectionOfPreviousRoom()).getRoom();
@@ -163,7 +158,7 @@ public abstract class Room implements Comparable<Room>{
      * @return Key that is locking the room
      */
     public Key getLockingKey() {
-        if (!isLockedWithKey()){
+        if (!isLockedWithKey()) {
             throw new IllegalStateException("method can be only called on room locked with keydoor. Check with isLockedWithKey()");
         }
         KeyDoor keyDoor = (KeyDoor) previousRoom.getDoorByDirection(directionOfPreviousRoom.getOpposite());
@@ -179,14 +174,14 @@ public abstract class Room implements Comparable<Room>{
         monsters.add(monster);
     }
 
-    public java.util.List<Monster> getMonsters() {
+    public List<Monster> getMonsters() {
         return monsters;
     }
 
     @Override
     public String toString() {
-        return "Room [north=" + hasDoorAtDirection(Direction.NORTH) + ", east="  + hasDoorAtDirection(Direction.EAST) +
-                ", south="  + hasDoorAtDirection(Direction.SOUTH) + ", west="  + hasDoorAtDirection(Direction.WEST) +
+        return "Room [north=" + hasDoorAtDirection(Direction.NORTH) + ", east=" + hasDoorAtDirection(Direction.EAST) +
+                ", south=" + hasDoorAtDirection(Direction.SOUTH) + ", west=" + hasDoorAtDirection(Direction.WEST) +
                 ", coordinates=[" + coordinates.x + "," + coordinates.y + "], key=" + key + ", isLocked=" + isLocked +
                 ", monsterCount=" + monsters.size() + ", droppedItemCount=" + droppedItems.size() + "]";
     }
@@ -199,12 +194,12 @@ public abstract class Room implements Comparable<Room>{
         return droppedItems;
     }
 
-    public void addDroppedItem(Item item){
+    public void addDroppedItem(Item item) {
         droppedItems.add(item);
     }
 
-    public void removeDroppedItem(Item item){
-        if (droppedItems.contains(item)){
+    public void removeDroppedItem(Item item) {
+        if (droppedItems.contains(item)) {
             droppedItems.remove(item);
         }
     }
@@ -221,8 +216,8 @@ public abstract class Room implements Comparable<Room>{
 
     public int numberOfDoors() {
         int counter = 0;
-        for (Direction dir: Direction.values()){
-            if (getDoorByDirection(dir) != null){
+        for (Direction dir : Direction.values()) {
+            if (getDoorByDirection(dir) != null) {
                 counter++;
             }
         }
@@ -241,22 +236,22 @@ public abstract class Room implements Comparable<Room>{
         roomObjects.add(roomObject);
     }
 
-    public java.util.List<RoomObject> getRoomObjects(){
+    public java.util.List<RoomObject> getRoomObjects() {
         return roomObjects;
     }
 
     public boolean collidesWithRoomObject(Point point, Size size) {
-        for (RoomObject ro: roomObjects){
-            if (!ro.isPassable()){
-                if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), point, size, 0)){
+        for (RoomObject ro : roomObjects) {
+            if (!ro.isPassable()) {
+                if (Util.areasOverlap(ro.getPosition().getPoint(), ro.getImageSize(), point, size, 0)) {
                     return true;
-                };
+                }
             }
         }
         return false;
     }
 
-    public Size getRoomSize(){
+    public Size getRoomSize() {
         return roomSize;
     }
 

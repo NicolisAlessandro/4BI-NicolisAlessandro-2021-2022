@@ -15,15 +15,15 @@ public class Ripetizioni {
         Scanner sc = new Scanner(System.in);
         int n, nq, nc;
         int scelta = 1;
-        do{
+        do {
             n = sc.nextInt();
             System.out.println(n);
             nq = n * n;
             System.out.println("numero al quadrato " + nq);
-            nc = n * n * n; 
+            nc = n * n * n;
             System.out.println("numeo al cubo " + nc);
             System.out.println("vuoi prosequire? Premere 1");
             scelta = sc.nextInt();
-        }while(scelta == 1);
+        } while (scelta == 1);
     }
 }

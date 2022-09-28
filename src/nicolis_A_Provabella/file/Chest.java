@@ -18,18 +18,19 @@ public abstract class Chest extends RoomObject {
 
     @Override
     public void doAction(Option option, Player player) {
-        switch (option){
-            case OPEN: open(player); break;
-            default: open(player); break;
+        if (option == Option.OPEN) {
+            open(player);
+        } else {
+            open(player);
         }
 
     }
 
     private void open(Player player) {
-        if (player.isCloseToInteractable(this)){
-            if (!opened){
+        if (player.isCloseToInteractable(this)) {
+            if (!opened) {
                 opened = true;
-                for (Item item: lootTable.getRandomDrops()){
+                for (Item item : lootTable.getRandomDrops()) {
                     item.dropAt(player.getPosition());
                     item.tryPickUp(player);
                 }
@@ -37,8 +38,8 @@ public abstract class Chest extends RoomObject {
         }
     }
 
-    public String getName(){
-        if (opened){
+    public String getName() {
+        if (opened) {
             return super.getName() + " (empty)";
         }
         return super.getName();

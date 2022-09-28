@@ -16,15 +16,15 @@ public class Quadrato {
         Scanner sc = new Scanner(System.in);
         int n, p, area;
         int scelta = 1;
-        do{
+        do {
             n = sc.nextInt();
             System.out.println(n);
             p = 4 * n;
             System.out.println("il perimetro è " + p);
-            area = n * n; 
+            area = n * n;
             System.out.println("l'area è " + area);
             System.out.println("vuoi prosequire? Premere 1");
             scelta = sc.nextInt();
-        }while(scelta == 1);
+        } while (scelta == 1);
     }
 }

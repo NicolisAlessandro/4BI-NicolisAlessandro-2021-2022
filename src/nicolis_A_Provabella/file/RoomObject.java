@@ -1,11 +1,6 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Image;
-
-import main.game.maze.interactable.Interactable;
-import main.game.maze.interactable.Position;
-import main.game.util.Size;
-import main.game.util.Util;
+import java.awt.*;
 
 public abstract class RoomObject implements Interactable {
     private final boolean isPassable;
@@ -42,8 +37,8 @@ public abstract class RoomObject implements Interactable {
         return position;
     }
 
-    public void setPosition(Position position){
-        if (position == null){
+    public void setPosition(Position position) {
+        if (position == null) {
             this.position = null;
         } else {
             this.position = new Position(position);

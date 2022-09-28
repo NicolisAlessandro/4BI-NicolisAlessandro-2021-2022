@@ -1,10 +1,6 @@
 package nicolis_A_Provabella.file;
 
-import main.game.Config;
 import main.game.maze.interactable.item.Coins;
-import main.game.maze.mechanics.lootTable.LootEntry;
-import main.game.maze.mechanics.lootTable.LootTable;
-import main.game.util.Size;
 
 public class SmallChest extends Chest {
     private static final int WIDTH = 25;
@@ -13,13 +9,14 @@ public class SmallChest extends Chest {
     private static final Size imageSize = new Size(WIDTH, HEIGHT);
     private static final String IMAGE_SRC = Config.IMAGES_FOLDER_OBJECTS + "chest_normal.png";
     private static final LootTable LOOT_TABLE;
+
     static {
         LOOT_TABLE = new LootTable.Builder()
-                .addLootEntry(new LootEntry(1000,10000,new Coins(),1))
+                .addLootEntry(new LootEntry(1000, 10000, new Coins(), 1))
                 .build();
     }
 
-    public SmallChest(){
+    public SmallChest() {
         super(NAME, IMAGE_SRC, imageSize, LOOT_TABLE);
     }
 }

@@ -17,7 +17,7 @@ public class Evento {
 
     public Evento() {
         this.titolo = "";
-        this.data ="";
+        this.data = "";
         this.oraDiInizio = "";
         this.oraDiFine = "";
     }

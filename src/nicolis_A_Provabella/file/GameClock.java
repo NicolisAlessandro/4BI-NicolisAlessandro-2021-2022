@@ -7,13 +7,14 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class GameClock {
-    private List<GameAction> gameActions = new ArrayList<GameAction>();
-    private List<GameAction> toBeRemoved = new ArrayList<GameAction>();
-    public GameClock(){
+    private final List<GameAction> gameActions = new ArrayList<>();
+    private final List<GameAction> toBeRemoved = new ArrayList<>();
+
+    public GameClock() {
     }
 
     public void addGameAction(GameAction gameAction) {
-        synchronized(gameActions){
+        synchronized (gameActions) {
             gameActions.add(gameAction);
         }
     }
@@ -23,23 +24,20 @@ public class GameClock {
         executor.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-//				if (!jframe.isFocused()){
-//					return;
-//				}
                 long start = System.currentTimeMillis();
                 synchronized (gameActions) {
-                    for (GameAction gameAction: gameActions){
+                    for (GameAction gameAction : gameActions) {
                         gameAction.doAction();
                     }
-                    synchronized(toBeRemoved){
-                        for (Iterator<GameAction> i = toBeRemoved.iterator(); i.hasNext();){
+                    synchronized (toBeRemoved) {
+                        for (Iterator<GameAction> i = toBeRemoved.iterator(); i.hasNext(); ) {
                             gameActions.remove(i.next());
                             i.remove();
                         }
                     }
                 }
                 long time = System.currentTimeMillis() - start;
-                if (time > Config.SCREEN_REFRESH_DELAY){
+                if (time > Config.SCREEN_REFRESH_DELAY) {
                     System.out
                             .println("GameClock.run(): took time " + (System.currentTimeMillis() - start) + " ms, "
                                     + "longer than refresh delay. Optimize something!");
@@ -49,13 +47,13 @@ public class GameClock {
     }
 
     public void removeGameAction(GameAction gameAction) {
-        synchronized(toBeRemoved){
+        synchronized (toBeRemoved) {
             toBeRemoved.add(gameAction);
         }
     }
 
     public void reset() {
-        synchronized (gameActions){
+        synchronized (gameActions) {
             gameActions.clear();
         }
     }

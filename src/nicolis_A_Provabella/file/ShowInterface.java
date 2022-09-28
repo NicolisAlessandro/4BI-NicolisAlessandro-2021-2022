@@ -1,17 +1,10 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Point;
+import main.game.maze.mechanics.shop.Stock;
+
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-
-import main.game.Config;
-import main.game.maze.interactable.creature.player.Player;
-import main.game.maze.mechanics.shop.Stock;
-import main.game.maze.mechanics.shop.StockItem;
-import main.game.util.Size;
-import main.game.util.Util;
 
 public class ShopInterface implements GameInterface {
     private static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 100);
@@ -23,9 +16,11 @@ public class ShopInterface implements GameInterface {
     private static final int MARGIN_EDGE = 30;
     private static final int MARGIN_INSIDE = 10;
     private static final int MARGIN_SLOTS_IMAGES = 5;
-    private static final Size SIZE_STOCK_SLOT = new Size(60,60);
+    private static final Size SIZE_STOCK_SLOT = new Size(60, 60);
     private static final Size SIZE_DESCRIPTION;
     private static final Size SIZE_BUTTON_BUY;
+    private static final Size SIZE_INTERFACE;
+
     static {
         int height = 40;
         int spanSlotsWidth = 4;
@@ -34,7 +29,7 @@ public class ShopInterface implements GameInterface {
         int widthButton = (SLOTS_HORIZONTAL - spanSlotsWidth) * (SIZE_STOCK_SLOT.width + MARGIN_INSIDE) - MARGIN_INSIDE;
         SIZE_BUTTON_BUY = new Size(widthButton, height);
     }
-    private static final Size SIZE_INTERFACE;
+
     static {
         SIZE_INTERFACE = new Size(2 * MARGIN_EDGE + SLOTS_HORIZONTAL
                 * (SIZE_STOCK_SLOT.width + MARGIN_INSIDE) - MARGIN_INSIDE,
@@ -42,17 +37,18 @@ public class ShopInterface implements GameInterface {
                         * (SIZE_STOCK_SLOT.width + MARGIN_INSIDE) + SIZE_DESCRIPTION.height);
 
     }
+
     private final Stock stock;
     private final Player player;
     private Point interfaceCorner;
     private int selectedSlot = -1;
 
-    public ShopInterface(Stock stock, Player player){
+    public ShopInterface(Stock stock, Player player) {
         this.stock = stock;
         this.player = player;
     }
 
-    public void drawInterface(Graphics g, Point cornerOfScreen, Size screenSize){
+    public void drawInterface(Graphics g, Point cornerOfScreen, Size screenSize) {
         drawBackgroundOverlay(g, cornerOfScreen, screenSize);
         Point interfaceCornerRelative = Util.placeInMiddleOf(screenSize, SIZE_INTERFACE);
         Point interfaceCornerAbsolute = interfaceCorner = new Point(interfaceCornerRelative.x + cornerOfScreen.x, interfaceCornerRelative.y + cornerOfScreen.y);
@@ -66,7 +62,7 @@ public class ShopInterface implements GameInterface {
     private void drawBuyButton(Graphics g, Point interfaceCornerAbsolute) {
         g.setColor(COLOR_SLOT);
         Point buttonCorner = new Point(interfaceCornerAbsolute.x + MARGIN_EDGE + MARGIN_INSIDE + SIZE_DESCRIPTION.width,
-                interfaceCornerAbsolute.y+MARGIN_EDGE+(SLOTS_VERTICAL)*(MARGIN_INSIDE+SIZE_STOCK_SLOT.height));
+                interfaceCornerAbsolute.y + MARGIN_EDGE + (SLOTS_VERTICAL) * (MARGIN_INSIDE + SIZE_STOCK_SLOT.height));
         g.fillRect(buttonCorner.x, buttonCorner.y, SIZE_BUTTON_BUY.width, SIZE_BUTTON_BUY.height);
         Util.drawTextLarge(g, buttonCorner, SIZE_BUTTON_BUY, 20, "BUY");
     }
@@ -74,9 +70,9 @@ public class ShopInterface implements GameInterface {
     private void drawDescription(Graphics g, Point interfaceCornerAbsolute) {
         //g.setColor(COLOR_SLOT);
         Point descriptionCorner = new Point(interfaceCornerAbsolute.x + MARGIN_EDGE,
-                interfaceCornerAbsolute.y+MARGIN_EDGE+(SLOTS_VERTICAL)*(MARGIN_INSIDE+SIZE_STOCK_SLOT.height));
+                interfaceCornerAbsolute.y + MARGIN_EDGE + (SLOTS_VERTICAL) * (MARGIN_INSIDE + SIZE_STOCK_SLOT.height));
         //g.fillRect(descriptionCorner.x, descriptionCorner.y, SIZE_DESCRIPTION.width, SIZE_DESCRIPTION.height);
-        if (selectedSlot != -1){
+        if (selectedSlot != -1) {
             StockItem stockItem = stock.getStockItems().get(selectedSlot);
             Util.drawTextSmall(g, descriptionCorner, stockItem.getItem().getName(), stockItem.getItem().getShortDescription(), "Price: " + stockItem.getPrice());
         }
@@ -102,22 +98,22 @@ public class ShopInterface implements GameInterface {
     private void drawStockItems(Graphics g, Point interfaceCorner) {
         g.setColor(COLOR_SLOT);
         int stockSize = stock.getStockItems().size();
-        Size imageSize = new Size(SIZE_STOCK_SLOT.width - 2*MARGIN_SLOTS_IMAGES,SIZE_STOCK_SLOT.height - 2*MARGIN_SLOTS_IMAGES);
+        Size imageSize = new Size(SIZE_STOCK_SLOT.width - 2 * MARGIN_SLOTS_IMAGES, SIZE_STOCK_SLOT.height - 2 * MARGIN_SLOTS_IMAGES);
         for (int i = 0; i < SLOTS_HORIZONTAL; i++) {
             for (int j = 0; j < SLOTS_VERTICAL; j++) {
-                Point slotCorner = new Point(interfaceCorner.x+MARGIN_EDGE+i*(MARGIN_INSIDE+SIZE_STOCK_SLOT.width),
-                        interfaceCorner.y+MARGIN_EDGE+j*(MARGIN_INSIDE+SIZE_STOCK_SLOT.height));
+                Point slotCorner = new Point(interfaceCorner.x + MARGIN_EDGE + i * (MARGIN_INSIDE + SIZE_STOCK_SLOT.width),
+                        interfaceCorner.y + MARGIN_EDGE + j * (MARGIN_INSIDE + SIZE_STOCK_SLOT.height));
                 int slot = j * SLOTS_HORIZONTAL + i;
-                if (slot == selectedSlot){
+                if (slot == selectedSlot) {
                     g.setColor(COLOR_SLOT_SELECTED);
                     g.fillRect(slotCorner.x, slotCorner.y, SIZE_STOCK_SLOT.width, SIZE_STOCK_SLOT.height);
                     g.setColor(COLOR_SLOT);
                 } else {
                     g.fillRect(slotCorner.x, slotCorner.y, SIZE_STOCK_SLOT.width, SIZE_STOCK_SLOT.height);
                 }
-                if (slot < stockSize){
+                if (slot < stockSize) {
                     StockItem stockItem = stock.getStockItems().get(slot);
-                    Util.drawImage(g, stockItem.getItem().getImage(), new Point(slotCorner.x+MARGIN_SLOTS_IMAGES,slotCorner.y+MARGIN_SLOTS_IMAGES), imageSize);
+                    Util.drawImage(g, stockItem.getItem().getImage(), new Point(slotCorner.x + MARGIN_SLOTS_IMAGES, slotCorner.y + MARGIN_SLOTS_IMAGES), imageSize);
                 }
             }
         }
@@ -130,11 +126,11 @@ public class ShopInterface implements GameInterface {
         Point clickPosition = me.getPoint();
         for (int i = 0; i < SLOTS_HORIZONTAL; i++) {
             for (int j = 0; j < SLOTS_VERTICAL; j++) {
-                Point slotCorner = new Point(interfaceCorner.x+MARGIN_EDGE+i*(MARGIN_INSIDE+SIZE_STOCK_SLOT.width),
-                        interfaceCorner.y+MARGIN_EDGE+j*(MARGIN_INSIDE+SIZE_STOCK_SLOT.height));
+                Point slotCorner = new Point(interfaceCorner.x + MARGIN_EDGE + i * (MARGIN_INSIDE + SIZE_STOCK_SLOT.width),
+                        interfaceCorner.y + MARGIN_EDGE + j * (MARGIN_INSIDE + SIZE_STOCK_SLOT.height));
                 int slot = j * SLOTS_HORIZONTAL + i;
-                if (slot < stockSize){
-                    if (Util.clickedOn(clickPosition, slotCorner, SIZE_STOCK_SLOT, 0)){
+                if (slot < stockSize) {
+                    if (Util.clickedOn(clickPosition, slotCorner, SIZE_STOCK_SLOT, 0)) {
                         selectedSlot = slot;
                         return;
                     }
@@ -143,7 +139,7 @@ public class ShopInterface implements GameInterface {
         }
         Point buyButtonCorner = new Point(interfaceCorner.x + MARGIN_EDGE + MARGIN_INSIDE + SIZE_DESCRIPTION.width,
                 interfaceCorner.y + MARGIN_EDGE + SLOTS_VERTICAL * (MARGIN_INSIDE + SIZE_STOCK_SLOT.height));
-        if (Util.clickedOn(clickPosition, buyButtonCorner, SIZE_BUTTON_BUY, 0)){
+        if (Util.clickedOn(clickPosition, buyButtonCorner, SIZE_BUTTON_BUY, 0)) {
             stock.sellItem(selectedSlot, player);
         }
     }
@@ -151,9 +147,8 @@ public class ShopInterface implements GameInterface {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case Config.KEYBIND_CLOSE_INTERFACE: player.setInterface(null); break;
-            default: break;
+        if (keyCode == Config.KEYBIND_CLOSE_INTERFACE) {
+            player.setInterface(null);
         }
     }
 

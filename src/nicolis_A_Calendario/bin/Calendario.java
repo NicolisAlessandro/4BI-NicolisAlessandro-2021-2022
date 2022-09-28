@@ -6,10 +6,8 @@ public class calendario {
     private int conta;
 
     public calendario(Evento[] lista, int conta) {
-        for(int i =0; i < lista.length; i++){
-            this.lista[i] = lista[i];
-        }
-        
+        System.arraycopy(lista, 0, this.lista, 0, lista.length);
+
         this.conta = conta;
     }
 
@@ -31,70 +29,68 @@ public class calendario {
     }
 
     public void setConta(int conta) {
-        this.conta = conta;       
+        this.conta = conta;
     }
 
-    public void aggiungiEvento(String titolo, String data, String oraDiInizio, String oraDiFine, String colore){
+    public void aggiungiEvento(String titolo, String data, String oraDiInizio, String oraDiFine, String colore) {
 
         Evento a = new Evento(titolo, data, oraDiInizio, oraDiFine, colore);
 
-        if(conta >= lista.length){
+        if (conta >= lista.length) {
             espandi();
         }
-        lista [conta] = a;
+        lista[conta] = a;
         conta++;
     }
 
-    public void aggiungiEvento(Evento a){
+    public void aggiungiEvento(Evento a) {
 
-        if(conta >= lista.length){
+        if (conta >= lista.length) {
             espandi();
         }
-        lista [conta] = a;
+        lista[conta] = a;
         conta++;
     }
 
-    public void espandi(){
-        Evento[] b = new Evento[lista.length*2];
-            for (int i = 0; i < lista.length; i++){
-                b[i] = lista[i];
-            }
-            lista = b;
+    public void espandi() {
+        Evento[] b = new Evento[lista.length * 2];
+        System.arraycopy(lista, 0, b, 0, lista.length);
+        lista = b;
     }
 
-    public void rimuoviEvento(String titolo){
+    public void rimuoviEvento(String titolo) {
 
-        for (int i = 0; i < conta; i++){
+        for (int i = 0; i < conta; i++) {
             Evento tm = lista[i];
-            
-            if (tm.getTitolo().equals(titolo)){
-                
-                for (int j = i; j < conta-1; j++){
-                    lista[j] = lista[j+1];
-                    
+
+            if (tm.getTitolo().equals(titolo)) {
+
+                for (int j = i; j < conta - 1; j++) {
+                    lista[j] = lista[j + 1];
+
                 }
-            conta --;
+                conta--;
             }
             System.out.println(lista[i]);
         }
     }
-    
-    public Evento[] cercaEventi(String data){
-        
+
+    public Evento[] cercaEventi(String data) {
+
         Evento[] a = new Evento[lista.length];
 
-        for (int i = 0; i < this.conta; i++){
+        for (int i = 0; i < this.conta; i++) {
             Evento tm = lista[i];
-            
 
-            if (tm.getData().equals(data)){
+
+            if (tm.getData().equals(data)) {
                 int b = 0;
                 a[b] = tm;
                 b++;
-                
+
             }
-            
+
         }
         return a;
-    }  
+    }
 }

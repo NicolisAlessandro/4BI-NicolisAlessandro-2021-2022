@@ -15,12 +15,12 @@ import java.util.Scanner;
 public class Equazione {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int a, b, x , y;
+        int a, b, x, y;
         String scelta;
-        do{
-            a = Integer.parseInt (sc.nextLine());
-            b = Integer.parseInt (sc.nextLine());
-            x = Integer.parseInt (sc.nextLine());
+        do {
+            a = Integer.parseInt(sc.nextLine());
+            b = Integer.parseInt(sc.nextLine());
+            x = Integer.parseInt(sc.nextLine());
             System.out.println("il valore di a è " + a);
             System.out.println("il valore di b è " + b);
             System.out.println("il valore di x è " + x);
@@ -29,7 +29,7 @@ public class Equazione {
             System.out.println("y = " + a + "x " + b);
             System.out.println("vuoi prosequire? Premere 1");
             scelta = sc.nextLine();
-            System.out.println( scelta);
-        }while(scelta.equals("Si"));
+            System.out.println(scelta);
+        } while (scelta.equals("Si"));
     }
 }

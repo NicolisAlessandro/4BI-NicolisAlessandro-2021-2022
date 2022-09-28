@@ -40,40 +40,40 @@ public class Punto {
 
     public double differenzaPuntoOrigine(double x, double y) {
         double dis = 0;
-        dis = Math.sqrt((0 - x)*(0 - x) + (0 - y)*(0 - y));
+        dis = Math.sqrt((0 - x) * (0 - x) + (0 - y) * (0 - y));
         return dis;
     }
 
     public double differenzaPunti(double x1, double y1, double x2, double y2) {
         double dis = 0;
-        dis = Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
-        return dis;
-    }
-    
-    public double differenzaPunti2(Punto pippo) {
-        double dis = 0;
-        x1=this.x;
-        y1=this.y;
-        x2=pippo.x;
-        y2=pippo.y;
-        dis = Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+        dis = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
         return dis;
     }
 
-    public int vicinoPunto(double dis1, double dis2){
+    public double differenzaPunti2(Punto pippo) {
+        double dis = 0;
+        x1 = this.x;
+        y1 = this.y;
+        x2 = pippo.x;
+        y2 = pippo.y;
+        dis = Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        return dis;
+    }
+
+    public int vicinoPunto(double dis1, double dis2) {
         int v = 0;
-        if (dis1 < dis2){
+        if (dis1 < dis2) {
             v = 1;
-        }else if(dis1 > dis2){
+        } else if (dis1 > dis2) {
             v = -1;
-        }else{
+        } else {
             v = 0;
         }
         return v;
     }
 }
 
-class PuntoTest{
+class PuntoTest {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double x1 = sc.nextDouble();
@@ -82,21 +82,21 @@ class PuntoTest{
         double y2 = sc.nextDouble();
         Punto P1 = new Punto(x1, y1);
         Punto P2 = new Punto(x2, y2);
-        System.out.println(P1.toString());
-        System.out.println(P2.toString());
+        System.out.println(P1);
+        System.out.println(P2);
         double disp = P1.differenzaPunti(x1, y1, x2, y2);
         double disp2 = P1.differenzaPunti(P2);
         double dis1 = P1.differenzaPuntoOrigine(x1, y1);
         double dis2 = P2.differenzaPuntoOrigine(x2, y2);
-        System.out.println("La distanza del P1 dall'origine è "+ dis1);
-        System.out.println("La distanza del P2 dall'origine è "+ dis2);
-        System.out.println("La distanza tra i 2 punti è "+ disp);
+        System.out.println("La distanza del P1 dall'origine è " + dis1);
+        System.out.println("La distanza del P2 dall'origine è " + dis2);
+        System.out.println("La distanza tra i 2 punti è " + disp);
         int v = P1.vicinoPunto(dis1, dis2);
-        if (v == 1){
+        if (v == 1) {
             System.out.println("il punto più vicino è il P1 ");
-        }else if (v == -1){
+        } else if (v == -1) {
             System.out.println("il punto più vicino è il P2 ");
-        }else{
+        } else {
             System.out.println("il punti sono distanti uguali ");
         }
     }

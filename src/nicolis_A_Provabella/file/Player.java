@@ -1,19 +1,6 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
-
-import main.game.Config;
-import main.game.maze.Direction;
-import main.game.maze.DummyObject;
-import main.game.maze.interactable.Interactable;
-import main.game.maze.interactable.Option;
-import main.game.maze.interactable.Position;
-import main.game.maze.interactable.creature.Creature;
 import main.game.maze.interactable.item.Coins;
-import main.game.maze.interactable.item.Item;
-import main.game.maze.interactable.item.Key;
 import main.game.maze.interactable.item.food.Cake;
 import main.game.maze.interactable.item.food.Fish;
 import main.game.maze.interactable.item.food.Food;
@@ -24,33 +11,31 @@ import main.game.maze.interactable.item.weapon.Bow;
 import main.game.maze.interactable.item.weapon.Staff;
 import main.game.maze.interactable.item.weapon.Sword;
 import main.game.maze.interactable.item.weapon.Weapon;
-import main.game.maze.mechanics.stats.Stats;
-import main.game.maze.room.Room;
-import main.game.ui.gameinterface.GameInterface;
-import main.game.ui.playerpanel.PlayerPanel;
-import main.game.util.Size;
-import main.game.util.Util;
 
-public class Player extends Creature{
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Player extends Creature {
     private static final int HEALTH = 1000;
     private static final int MOVEMENT_SPEED = 5;
     private static final int SIZE_WIDTH = 20;
     private static final int SIZE_HEIGHT = 20;
     private static final String IMAGE = Config.IMAGES_FOLDER_CREATURES + "player.png";
 
-    private List<Key> keys = new ArrayList<Key>();
-    private GateStone personalGateStone = new PersonalGateStone(this);
-    private GateStone groupGateStone = new GroupGateStone(this);
+    private final List<Key> keys = new ArrayList<>();
+    private final GateStone personalGateStone = new PersonalGateStone(this);
+    private final GateStone groupGateStone = new GroupGateStone(this);
     private Position startingPosition;
-    private List<Item> items = new ArrayList<Item>();
-    private PlayerController controller;
+    private final List<Item> items = new ArrayList<>();
+    private final PlayerController controller;
     private GameInterface gameInterface;
 
-    public Player(String name){
-        super(name, new Size(SIZE_WIDTH,SIZE_HEIGHT));
+    public Player(String name) {
+        super(name, new Size(SIZE_WIDTH, SIZE_HEIGHT));
         controller = new PlayerController(this);
         image = Util.readImage(IMAGE);
-        stats = new Stats(5,5,5,10,HEALTH,MOVEMENT_SPEED);
+        stats = new Stats(5, 5, 5, 10, HEALTH, MOVEMENT_SPEED);
         //increaseLevel(1000);
         weapon = new Sword();
         addItem(weapon);
@@ -61,17 +46,19 @@ public class Player extends Creature{
         addItem(new Fish());
     }
 
-    public void addKey(Key key){
+    public void addKey(Key key) {
         keys.add(key);
     }
-    public List<Key> getKeys(){
+
+    public List<Key> getKeys() {
         return keys;
     }
-    public void removeKey(Key key){
+
+    public void removeKey(Key key) {
         keys.remove(key);
     }
 
-    public void move(Direction direction){
+    public void move(Direction direction) {
         controller.move(direction);
     }
 
@@ -79,11 +66,11 @@ public class Player extends Creature{
         controller.pickUpKeys();
     }
 
-    public GateStone getGroupGateStone(){
+    public GateStone getGroupGateStone() {
         return groupGateStone;
     }
 
-    public GateStone getPersonalGateStone(){
+    public GateStone getPersonalGateStone() {
         return personalGateStone;
     }
 
@@ -102,7 +89,7 @@ public class Player extends Creature{
     public void createStartingPosition(Room startingRoom) {
         startingPosition = new Position();
         startingPosition.setRoom(startingRoom);
-        startingPosition.setPoint((Config.SIZE_ROOM_WIDTH-imageSize.width)/2,(Config.SIZE_ROOM_HEIGHT-imageSize.height)/2);
+        startingPosition.setPoint((Config.SIZE_ROOM_WIDTH - imageSize.width) / 2, (Config.SIZE_ROOM_HEIGHT - imageSize.height) / 2);
     }
 
     public void setStartingPosition() {
@@ -110,10 +97,10 @@ public class Player extends Creature{
     }
 
     public void interactWith(Option option, Interactable interactable) {
-        if (interactable instanceof DummyObject){
+        if (interactable instanceof DummyObject) {
             return;
         }
-        if (getPosition().getRoom() == interactable.getPosition().getRoom()){
+        if (getPosition().getRoom() == interactable.getPosition().getRoom()) {
             interactable.doAction(option, this);
         }
     }
@@ -139,7 +126,7 @@ public class Player extends Creature{
         controller.equip(item);
     }
 
-    public void teleportToBase(){
+    public void teleportToBase() {
         controller.teleportToBase();
     }
 
@@ -148,10 +135,8 @@ public class Player extends Creature{
     }
 
     public boolean hasEquipped(Item item) {
-        if (item instanceof Weapon){
-            if (weapon == item){
-                return true;
-            }
+        if (item instanceof Weapon) {
+            return weapon == item;
         }
         return false;
     }
@@ -161,7 +146,7 @@ public class Player extends Creature{
     }
 
     public boolean isCloseToInteractable(Interactable interactable) {
-        if (getPosition().getRoom() != interactable.getPosition().getRoom()){
+        if (getPosition().getRoom() != interactable.getPosition().getRoom()) {
             return false;
         }
         Point p = getPosition().getPoint();
@@ -193,13 +178,13 @@ public class Player extends Creature{
         this.gameInterface = gameInterface;
     }
 
-    public GameInterface getGameInterface(){
+    public GameInterface getGameInterface() {
         return gameInterface;
     }
 
     public Item getItemForClass(Class<?> clazz) {
         for (Item item : items) {
-            if (item.getClass().equals(clazz)){
+            if (item.getClass().equals(clazz)) {
                 return item;
             }
         }

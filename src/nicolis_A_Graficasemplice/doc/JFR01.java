@@ -1,8 +1,8 @@
 package nicolis_A_Graficasemplice.doc;
+
 import javax.swing.*;
 
 /**
- *
  * @author lorenzo
  */
 public class JFR01 extends JFrame {
@@ -24,10 +24,10 @@ public class JFR01 extends JFrame {
     }
 
     public static void main(String[] args) {
-        JFR01 j1=new JFR01("Primo Esempio");
+        JFR01 j1 = new JFR01("Primo Esempio");
 
 
         //con un click si cancella tutto
     }
-    
+
 }

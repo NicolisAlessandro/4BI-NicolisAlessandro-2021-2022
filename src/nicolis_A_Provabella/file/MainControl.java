@@ -4,20 +4,18 @@ import main.game.maze.interactable.creature.monster.MonsterGameAction;
 
 public class MainController {
     private static GameClock gameClock;
-    private static Session session;
-    private static GameWindow gameWindow;
 
     public static void main(String[] args) {
         gameClock = new GameClock();
-        session = new Session();
-        gameWindow = new GameWindow(session);
+        Session session = new Session();
+        GameWindow gameWindow = new GameWindow(session);
         new PlayerGameAction(session);
         new MonsterGameAction(session);
         gameWindow.setVisible(true);
         gameClock.run();
     }
 
-    public static void addGameAction(GameAction gameAction){
+    public static void addGameAction(GameAction gameAction) {
         gameClock.addGameAction(gameAction);
     }
 

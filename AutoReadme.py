@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-__autor__ = "Francesco"
+__author__ = "deMartini Francesco"
 __version__ = "0101 2021/11/04"
 
 import os
@@ -10,10 +10,10 @@ os.chdir(head)
 percorso = os.getcwd()
 
 # CONSTANT
-srcGitDirectory = "https://github.com/NicolisAlessandro/4BI-NicolisAlessandro-2021-2022/tree/master"
+srcGitDirectory = "https://github.com/NicolisAlessandro/5BI-NicolisAlessandro-2022-2023/tree/master"
 readmePath = "/doc/README.md"
 # README
-intestazioneMD = """# 4BI-NicolisAlessandro-2021-2022
+intestazioneMD = """# 5BI-NicolisAlessandro-2022-2023
 
 """
 lastMD = """## Last

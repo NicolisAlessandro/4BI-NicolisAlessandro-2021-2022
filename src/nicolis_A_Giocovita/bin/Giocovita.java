@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class GiocoVita {
 
-    public static void init(int m[][]) {
+    public static void init(int[][] m) {
         for (int r = 0; r < m.length; r++) {
             for (int c = 0; c < m[r].length; c++) {
                 if (Math.random() > 0.75) {
@@ -16,7 +16,8 @@ public class GiocoVita {
             }
         }
     }
-    public static void visualizza(int m[][]) {
+
+    public static void visualizza(int[][] m) {
         for (int r = 0; r < m.length; r++) {
             for (int c = 0; c < m[r].length; c++) {
                 if (m[r][c] == 1) {
@@ -25,22 +26,24 @@ public class GiocoVita {
                     System.out.print(".");
                 }
             }
-            System.out.println("");
+            System.out.println();
         }
     }
-    public static int attorno(int m[][],int r,int c){ 
-        return 3;               
+
+    public static int attorno(int[][] m, int r, int c) {
+        return 3;
     }
-    public static void evoluz(int m[][]) {
-        int nm[][];
+
+    public static void evoluz(int[][] m) {
+        int[][] nm;
         int nr, nc;
         nr = m.length;
         nc = m[0].length;
-        nm = new int[nr][nc];   
+        nm = new int[nr][nc];
 
         for (int r = 0; r < m.length; r++) {
             for (int c = 0; c < m[r].length; c++) {
-                int cva = attorno(m,r,c);
+                int cva = attorno(m, r, c);
 
                 if (m[r][c] == 1) {
                     if (cva == 2 || cva == 3) {
@@ -48,7 +51,7 @@ public class GiocoVita {
                     } else {
                         nm[r][c] = 0;
                     }
-                } else { 
+                } else {
                     if (cva == 3) {
                         nm[r][c] = 1;
                     } else {
@@ -58,14 +61,13 @@ public class GiocoVita {
             }
         }
         for (int r = 0; r < m.length; r++) {
-            for (int c = 0; c < m[r].length; c++) {
-                m[r][c] = nm[r][c];
-            }
+            System.arraycopy(nm[r], 0, m[r], 0, m[r].length);
         }
     }
+
     public static void main(String[] args) {
         Scanner inp = new Scanner(System.in);
-        int[][] mat; 
+        int[][] mat;
         mat = new int[10][12];
         init(mat);
         visual(mat);

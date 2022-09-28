@@ -1,11 +1,9 @@
 package nicolis_A_Nodo.bin;
 
-package Nodo;
-
 public class Nodo {
     private int e;
     private Nodo s;
-    
+
     public Nodo() {
         this.e = 0;
         this.s = null;
@@ -19,7 +17,7 @@ public class Nodo {
 
     public Nodo(Nodo s) {
         if (s != null) {
-            this.s = s; 
+            this.s = s;
         }
     }
 
@@ -42,17 +40,13 @@ public class Nodo {
     public String toString() {
         return "Nodo [elementi=" + e + ", Nodo successivo=" + s + "]";
     }
-   
+
     public boolean equals(Nodo n) {
         if (n != null) {
-            if (this.s == n){
-                return true;
-            }else{
-                return false;
-            } 
-        }else{
+            return this.s == n;
+        } else {
             return false;
         }
-        
+
     }
 }

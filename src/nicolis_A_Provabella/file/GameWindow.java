@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame implements GameAction {
-    private static final long serialVersionUID = 2068148394786292635L;
     public static final int HEIGHT = Board.HEIGHT + KeyBag.HEIGHT;
     public static final int WIDTH = Board.WIDTH + MiniMap.WIDTH;
     public static final Size SIZE = new Size(WIDTH, HEIGHT);
-    private Session session;
+    private static final long serialVersionUID = 2068148394786292635L;
+    private final Session session;
 
-    public GameWindow(Session session){
+    public GameWindow(Session session) {
         this.session = session;
         setTitle("Labyrinth");
         getContentPane().setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -53,7 +53,7 @@ public class GameWindow extends JFrame implements GameAction {
         getGlassPane().setVisible(true);
     }
 
-    public boolean isMenuInterfaceOpen(){
+    public boolean isMenuInterfaceOpen() {
         return getGlassPane().isVisible();
     }
 

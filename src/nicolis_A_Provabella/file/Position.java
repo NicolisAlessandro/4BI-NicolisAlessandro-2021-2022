@@ -1,28 +1,23 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Point;
-
-import main.game.maze.room.Room;
+import java.awt.*;
 
 public class Position {
     private Point point;
     private Room room;
 
-    public Position(Point point, Room room){
+    public Position(Point point, Room room) {
         this.point = new Point(point);
         this.room = room;
     }
 
-    public Position(Position position){
+    public Position(Position position) {
         this.point = position.getPoint();
         this.room = position.getRoom();
     }
 
-	/*public Position(Point point){
-		this.point = new Point(point);
-	}*/
-
-    public Position() {}
+    public Position() {
+    }
 
     public Point getPoint() {
         return new Point(point);
@@ -55,24 +50,20 @@ public class Position {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
-        if (!(o instanceof Position)){
+        if (!(o instanceof Position p)) {
             return false;
         }
-        Position p = (Position) o;
         if (point == null) {
             if (p.point != null)
                 return false;
         } else if (!point.equals(p.point))
             return false;
         if (room == null) {
-            if (p.room != null)
-                return false;
-        } else if (!room.equals(p.room))
-            return false;
-        return true;
+            return p.room == null;
+        } else return room.equals(p.room);
     }
 
 

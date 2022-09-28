@@ -4,20 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import main.game.maze.interactable.item.Item;
-import main.game.maze.interactable.item.ItemFactory;
-import main.game.maze.interactable.item.NonStackable;
-import main.game.maze.interactable.item.Stackable;
-
 public class LootEntry {
-    private int minQuantity;
-    private int maxQuantity;
+    private final int minQuantity;
+    private final int maxQuantity;
     private Item item;
-    private double weight;
+    private final double weight;
     private boolean stackable;
 
-    private LootEntry(int minQuantity, int maxQuantity, double weight){
-        if (minQuantity > maxQuantity){
+    private LootEntry(int minQuantity, int maxQuantity, double weight) {
+        if (minQuantity > maxQuantity) {
             throw new IllegalArgumentException("minimum quantity cant be greater than maximum");
         }
         this.minQuantity = minQuantity;
@@ -25,13 +20,13 @@ public class LootEntry {
         this.weight = weight;
     }
 
-    public LootEntry(int minQuantity, int maxQuantity, Stackable item, double weight){
+    public LootEntry(int minQuantity, int maxQuantity, Stackable item, double weight) {
         this(minQuantity, maxQuantity, weight);
         stackable = true;
         this.item = item;
     }
 
-    public LootEntry(int minQuantity, int maxQuantity, NonStackable item, double weight){
+    public LootEntry(int minQuantity, int maxQuantity, NonStackable item, double weight) {
         this(minQuantity, maxQuantity, weight);
         stackable = false;
         this.item = item;
@@ -43,20 +38,20 @@ public class LootEntry {
 
     public Item[] getLoot() {
         int rndQuantity;
-        if (minQuantity == maxQuantity){
+        if (minQuantity == maxQuantity) {
             rndQuantity = minQuantity;
         } else {
             Random rnd = new Random();
             rndQuantity = minQuantity + rnd.nextInt(maxQuantity - minQuantity);
         }
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         final String itemName = item.getName();
-        if (stackable){
+        if (stackable) {
             Stackable item = (Stackable) ItemFactory.getItemForName(itemName);
             item.addQuantity(rndQuantity);
             items.add(item);
         } else {
-            for (int i = 0; i < rndQuantity; i++){
+            for (int i = 0; i < rndQuantity; i++) {
                 items.add(ItemFactory.getItemForName(itemName));
             }
         }

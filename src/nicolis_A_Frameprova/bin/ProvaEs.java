@@ -1,7 +1,6 @@
 package nicolis_A_Frameprova.bin;
 
 
-
 public class ProvaEs {
     public static void main(String[] args) {
 

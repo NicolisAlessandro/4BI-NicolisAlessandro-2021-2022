@@ -1,28 +1,28 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Dimension;
+import java.awt.*;
 
 /**
  * An immutable class to replace Dimension
- * @author Henri
  *
+ * @author Henri
  */
 public class Size {
-    public static final Size MOUSECLICK = new Size(0,0);
+    public static final Size MOUSECLICK = new Size(0, 0);
     public final int width;
     public final int height;
 
-    public Size(int width, int height){
+    public Size(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public Size(Size size){
+    public Size(Size size) {
         width = size.width;
         height = size.height;
     }
 
-    public Size(Dimension dimension){
+    public Size(Dimension dimension) {
         Dimension dim = new Dimension(dimension);
         width = dim.width;
         height = dim.height;

@@ -7,15 +7,15 @@ import java.util.Scanner;
 
 public class contaparridis {
 
-    public static boolean calcolaPD(int num){
+    public static boolean calcolaPD(int num) {
         return (num % 2 == 0);
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = 1, contap = 0, contad = 0;
-        while (n != -1){
-            if (calcolaPD(n)){
+        while (n != -1) {
+            if (calcolaPD(n)) {
                 System.out.println("è pari");
                 contap = contap + 1;
             } else {

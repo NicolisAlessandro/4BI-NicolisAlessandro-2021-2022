@@ -1,6 +1,6 @@
 package nicolis_A_Provabella.file;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public final class Config {
@@ -13,15 +13,15 @@ public final class Config {
     public static final int SIZE_HEALTHBAR_WIDTH = 20;
     public static final int SIZE_HEALTHBAR_HEIGHT = 5;
     public static final int SIZE_DOOR_ROOM = 40;
-    public static final int SIZE_DOOR_MINIMAP = 80;	//relative to room width/height
+    public static final int SIZE_DOOR_MINIMAP = 80;    //relative to room width/height
     public static final int SIZE_THICKNESS_WALL = 7; // width/height of wall and corner image
     public static final int SIZE_THICKNESS_DOOR = 8;
 
     //Paddings
     public static final int PADDING_BOARD_ROOM_EXTERNAL = 100;
     public static final int PADDING_BOARD_ROOM_INTERNAL = 20;
-    public static final int PADDING_MINIMAP_ROOM_INTERNAL = 60;	//relative to room width/height
-    public static final int PADDING_MINIMAP_ROOM_EXTERNAL = 100;	//relative to room width/height
+    public static final int PADDING_MINIMAP_ROOM_INTERNAL = 60;    //relative to room width/height
+    public static final int PADDING_MINIMAP_ROOM_EXTERNAL = 100;    //relative to room width/height
     public static final int PADDING_HEALTHBAR = 5;
     public static final int PADDING_MOUSE_CLICK = 5;
 
@@ -74,7 +74,8 @@ public final class Config {
     public static final int DELAY_TELEPORT_TO_BASE = 4000;
     public static final int MAX_INTERACTION_DISTANCE = 5;
 
-    private Config(){
+    private Config() {
         throw new IllegalAccessError("Config must not be initiated");
-    };
+    }
+
 }

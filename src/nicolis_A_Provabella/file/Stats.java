@@ -2,10 +2,22 @@ package nicolis_A_Provabella.file;
 
 public class Stats {
     //public static final int MAX_LEVEL = 10;
-    private static int MAX_LEVEL = 20;
-    private int strength, dexterity, intelligence, stamina, maxHealth, currentHealth, movementSpeed, level;
-    private int baseStrength, baseDexterity, baseIntelligence, baseStamina, baseMaxHealth;
-    public Stats(int strength, int dexterity, int intelligence, int stamina, int maxHealth, int movementSpeed){
+    private static final int MAX_LEVEL = 20;
+    private int strength;
+    private int dexterity;
+    private int intelligence;
+    private int stamina;
+    private int maxHealth;
+    private int currentHealth;
+    private final int movementSpeed;
+    private final int level;
+    private final int baseStrength;
+    private final int baseDexterity;
+    private final int baseIntelligence;
+    private final int baseStamina;
+    private final int baseMaxHealth;
+
+    public Stats(int strength, int dexterity, int intelligence, int stamina, int maxHealth, int movementSpeed) {
         level = 1;
         this.strength = strength;
         this.dexterity = dexterity;
@@ -51,7 +63,7 @@ public class Stats {
     }
 
     public void doDamage(int damage) {
-        if (damage<currentHealth){
+        if (damage < currentHealth) {
             currentHealth -= damage;
         } else {
             currentHealth = 0;
@@ -67,20 +79,20 @@ public class Stats {
     }
 
     public void increaseLevel(int levels) {
-        if (level >= MAX_LEVEL){
+        if (level >= MAX_LEVEL) {
             return;
-        } else if (level + levels > MAX_LEVEL){
+        } else if (level + levels > MAX_LEVEL) {
             levels = MAX_LEVEL - level;
         }
-        strength = increaseLevel(strength, levels*baseStrength);
-        dexterity = increaseLevel(dexterity, levels*baseDexterity);
-        intelligence = increaseLevel(intelligence, levels*baseIntelligence);
-        stamina = increaseLevel(stamina, levels*baseStamina);
-        maxHealth = increaseLevel(maxHealth, levels*baseMaxHealth);
+        strength = increaseLevel(strength, levels * baseStrength);
+        dexterity = increaseLevel(dexterity, levels * baseDexterity);
+        intelligence = increaseLevel(intelligence, levels * baseIntelligence);
+        stamina = increaseLevel(stamina, levels * baseStamina);
+        maxHealth = increaseLevel(maxHealth, levels * baseMaxHealth);
         currentHealth = maxHealth;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         int level = 0;
         level += Math.max(strength, Math.max(dexterity, intelligence));
         level += stamina;
@@ -101,10 +113,10 @@ public class Stats {
     }
 
     public void heal(int healAmount) {
-        if (healAmount < 0){
+        if (healAmount < 0) {
             throw new IllegalArgumentException("healing amount must be positive");
         }
-        if (currentHealth + healAmount > maxHealth){
+        if (currentHealth + healAmount > maxHealth) {
             currentHealth = maxHealth;
         } else {
             currentHealth += healAmount;

@@ -1,21 +1,16 @@
 package nicolis_A_Provabella.file;
 
-import main.game.ui.GameWindow;
-import main.game.util.Size;
-import main.game.util.Util;
-
 public class MenuInterface extends JPanel {
     private static final long serialVersionUID = 655967667289292763L;
     private static final Color COLOR_TRANSPARENT = new Color(0, 0, 0, 100);
     private static final Color COLOR_MENU = new Color(50, 50, 50, 250);
     private static final Color COLOR_MENU_ITEM = new Color(60, 60, 60, 250);
-    private static final Size SIZE_MENU_ITEM = new Size(200,40);
+    private static final Size SIZE_MENU_ITEM = new Size(200, 40);
     private static final int MARGIN_EDGE = 30;
     private static final int MARGIN_INSIDE = 10;
     private static final Size SIZE_MENU;
     private final static List<MenuItem> MENU_ITEMS;
-    private final Point interfaceCorner;
-    private final GameWindow gameWindow;
+
     static {
         List<MenuItem> temp = new ArrayList<MenuItem>();
         temp.add(new MenuItemContinue());
@@ -26,6 +21,9 @@ public class MenuInterface extends JPanel {
                 2 * MARGIN_EDGE + (SIZE_MENU_ITEM.height + MARGIN_INSIDE) * MENU_ITEMS.size());
     }
 
+    private final Point interfaceCorner;
+    private final GameWindow gameWindow;
+
     public MenuInterface(GameWindow gameWindow) {
         addMouseListener(new MouseClickListener());
         interfaceCorner = Util.placeInMiddleOf(GameWindow.SIZE, SIZE_MENU);
@@ -33,7 +31,7 @@ public class MenuInterface extends JPanel {
     }
 
     @Override
-    public void paint(Graphics g){
+    public void paint(Graphics g) {
         super.paint(g);
         drawBackgroundOverlay(g);
         drawInterfaceBackground(g, interfaceCorner);
@@ -73,10 +71,10 @@ public class MenuInterface extends JPanel {
 
     private class MouseClickListener extends MouseAdapter {
 
-        public void mousePressed(MouseEvent me){
+        public void mousePressed(MouseEvent me) {
             for (int i = 0; i < MENU_ITEMS.size(); i++) {
                 Point point = getMenuItemCorner(interfaceCorner, i);
-                if (Util.clickedOn(me.getPoint(), point, SIZE_MENU_ITEM, 0)){
+                if (Util.clickedOn(me.getPoint(), point, SIZE_MENU_ITEM, 0)) {
                     MENU_ITEMS.get(i).click(gameWindow);
                     return;
                 }

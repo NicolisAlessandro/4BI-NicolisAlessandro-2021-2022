@@ -1,7 +1,8 @@
 package nicolis_A_Glotto.bin;
 
 
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GLotto {
     /*
@@ -21,7 +22,7 @@ public class GLotto {
         Scanner inp = new Scanner(System.in);
         Random ra = new Random();
 //------------- gestione scommessa   qn  e ns[]
-        int ns[] = new int[5];
+        int[] ns = new int[5];
         int qn; // quanti numeri si vogliono scommettere?
 
         System.out.print("Quanti numeri si vogliono 'giocare'");
@@ -32,7 +33,7 @@ public class GLotto {
             // non viene fatto alcun controllo
         }
 
-        int vec[][] = new int[10][5];
+        int[][] vec = new int[10][5];
         // ----------------- estrazioni
         for (int i = 0; i < 10; i++) {  // per ogni ruota
             for (int j = 0; j < 5; j++) {
@@ -45,9 +46,10 @@ public class GLotto {
                     for (int k = 0; k < j; k++) {
                         if (vec[i][k] == nume) {
                             tr = true;
+                            break;
                         }
                     }
-                } while (tr==true);
+                } while (tr);
                 vec[i][j] = nume;
 
             }
@@ -74,16 +76,16 @@ public class GLotto {
                     }
                 }
             }
-            
-            if (nest >0) {
+
+            if (nest > 0) {
                 nv = false;
                 System.out.printf("Sulla ruota %2d hai vinto %d \n", i + 1, nest);
             }
-                
+
         }
-        
-        
-        if(nv){
+
+
+        if (nv) {
             System.out.println("non hai vinto nulla");
         }
     }

@@ -7,11 +7,11 @@ import main.game.maze.interactable.item.weapon.Staff;
 import main.game.maze.interactable.item.weapon.Sword;
 
 public class ItemFactory {
-    private ItemFactory(){
+    private ItemFactory() {
         throw new IllegalAccessError("must not be initiated");
     }
 
-    public static Item getItemForName(String name){
+    public static Item getItemForName(String name) {
         return switch (name) {
             case Cake.NAME -> new Cake();
             case Fish.NAME -> new Fish();

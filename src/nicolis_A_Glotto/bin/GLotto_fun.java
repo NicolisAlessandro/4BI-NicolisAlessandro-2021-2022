@@ -1,16 +1,18 @@
 package nicolis_A_Glotto.bin;
 
 
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GLotto_fun {
 
     //true se num è presente in v  false altrimenti
-    public static boolean ricerca(int v[], int num) {
+    public static boolean ricerca(int[] v, int num) {
         boolean ris = false;
         for (int i = 0; i < v.length; i++) {
             if (v[i] == num) {
                 ris = true;
+                break;
             }
         }
         return ris;
@@ -21,7 +23,7 @@ public class GLotto_fun {
         Scanner inp = new Scanner(System.in);
         Random ra = new Random();
 //------------- gestione scommessa   qn  e ns[]
-        int ns[] = new int[5];
+        int[] ns = new int[5];
         int qn; // quanti nuneri si vogliono scommettere?
 
         System.out.print("Quanti numeri si vogliono 'giocare'");
@@ -31,12 +33,12 @@ public class GLotto_fun {
             do {
                 System.out.print("Inserire numero da 'giocare'  ");
                 num = inp.nextInt();
-            } while (ricerca(ns, num) == true);
+            } while (ricerca(ns, num));
             ns[i] = num;
 
         }
 
-        int vec[][] = new int[10][5];
+        int[][] vec = new int[10][5];
         // ----------------- estrazioni
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 5; j++) {
@@ -44,7 +46,7 @@ public class GLotto_fun {
                 int nume;
                 do {
                     nume = ra.nextInt(90) + 1;
-                } while (ricerca(vec[i], nume) == true);
+                } while (ricerca(vec[i], nume));
                 vec[i][j] = nume;
 
             }
@@ -65,7 +67,7 @@ public class GLotto_fun {
             // per ogni ruota conta quanti numeri fra quelli scommessi sono usciti?
             int nest = 0;
             for (int k = 0; k < qn; k++) {// per ogni numero scommesso
-                if (ricerca(vec[i], ns[k]) == true) {// è stato estratto?
+                if (ricerca(vec[i], ns[k])) {// è stato estratto?
                     nest++;
                 }
             }

@@ -1,12 +1,11 @@
 package nicolis_A_Graficasemplice.doc;
+
 import javax.swing.*;
 
 /**
- *
  * @author lorenzo
  */
 public class JFR00 extends JFrame {
-
 
 
     public JFR00() {
@@ -16,8 +15,8 @@ public class JFR00 extends JFrame {
     }
 
     public static void main(String[] args) {
-        JFR00 j1=new JFR00();
+        JFR00 j1 = new JFR00();
 
     }
-    
+
 }
